@@ -1,6 +1,10 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from '@react-navigation/stack';
 import Welcome from '../pages/Initial/Welcome';
+import Username from '../pages/Initial/Username';
 import {StatusBar} from 'react-native';
 // import { Container } from './styles';
 
@@ -12,8 +16,10 @@ const InitialRoutes: React.FC = () => {
       <InitialRoutesStack.Navigator
         screenOptions={{
           headerShown: false,
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}>
         <InitialRoutesStack.Screen name="Welcome" component={Welcome} />
+        <InitialRoutesStack.Screen name="Username" component={Username} />
       </InitialRoutesStack.Navigator>
     </>
   );

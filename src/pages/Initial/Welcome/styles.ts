@@ -4,7 +4,7 @@ export const Container = styled.ImageBackground`
   flex: 1;
 `;
 
-export const LogoContainer = styled.View`
+export const HeaderContainer = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;

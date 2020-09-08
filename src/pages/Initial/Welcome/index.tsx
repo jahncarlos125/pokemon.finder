@@ -5,7 +5,7 @@ import finderLogo from '../../../assets/finder.png';
 import pikachu from '../../../assets/pikachu.png';
 import {
   Container,
-  LogoContainer,
+  HeaderContainer,
   PokemonLogo,
   FinderLogo,
   BodyContainer,
@@ -15,15 +15,15 @@ import {
   FooterImg,
 } from './styles';
 
-const Welcome: React.FC = () => {
+const Welcome: React.FC = ({navigation}) => {
   return (
     <Container source={bg}>
-      <LogoContainer>
+      <HeaderContainer>
         <PokemonLogo source={pokemonLogo} />
         <FinderLogo source={finderLogo} />
-      </LogoContainer>
+      </HeaderContainer>
       <BodyContainer>
-        <BtnContainer>
+        <BtnContainer onPress={() => navigation.navigate('Username')}>
           <BtnText>Let's go!</BtnText>
         </BtnContainer>
       </BodyContainer>
