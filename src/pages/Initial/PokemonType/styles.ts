@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import {StyleSheet} from 'react-native';
 
 export const Container = styled.ImageBackground`
   flex: 1;
@@ -102,3 +103,10 @@ export const ModalFooterBtnText = styled.Text`
   color: #fff;
   font-size: 18px;
 `;
+
+export const style = StyleSheet.create({
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+});

@@ -1,9 +1,11 @@
 import React from 'react';
 import InitialRoutes from './initial.routes';
-// import { Container } from './styles';
+import {useApp} from '../contexts/app';
+import AppRoutes from './app.routes';
 
 const Routes: React.FC = () => {
-  return <InitialRoutes />;
+  const {showInitial} = useApp();
+  return showInitial ? <InitialRoutes /> : <AppRoutes />;
 };
 
 export default Routes;

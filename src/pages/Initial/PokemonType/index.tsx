@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {ScrollView} from 'react-native';
 import bg from '../../../assets/bg.png';
 import next from '../../../assets/next.png';
@@ -25,28 +25,23 @@ import {
   ModalFooter,
   ModalFooterBtn,
   ModalFooterBtnText,
+  style,
 } from './styles';
-import api from '../../../services/api';
 import PokemonTypeItem from '../../../components/PokemonTypeItem';
 import {useNavigation} from '@react-navigation/native';
+import {useApp} from '../../../contexts/app';
 
 const PokemonType: React.FC = () => {
   const [visible, setVisible] = useState(false);
-  const [types, setTypes] = useState([]);
-  const [choice, setChoice] = useState('Selecione');
   const navigation = useNavigation();
-
-  useEffect(() => {
-    async function getData() {
-      const {data} = await api.get('/types.json');
-      setTypes(data.results);
-    }
-
-    getData();
-  }, []);
+  const {user, types, setShowInitial, choice, setChoice} = useApp();
 
   function toogleType(name: string): void {
     setChoice(name);
+  }
+
+  function done(): void {
+    setShowInitial(false);
   }
 
   return (
@@ -55,7 +50,7 @@ const PokemonType: React.FC = () => {
         <HeaderBackBtnContainer onPress={() => navigation.goBack()}>
           <HeaderBackBtnImg source={chevron} />
         </HeaderBackBtnContainer>
-        <HeaderText>Hello, Jon Doe</HeaderText>
+        <HeaderText>Hello, {user}!</HeaderText>
       </HeaderContainer>
       <BodyContainer>
         <BodyText>...now tell us wich is your favorite Pokemon type:</BodyText>
@@ -65,18 +60,17 @@ const PokemonType: React.FC = () => {
         </SelectBtnContainer>
       </BodyContainer>
       <FooterContainer>
-        <BtnContainer>
-          <BtnImg source={next} />
-        </BtnContainer>
+        {choice !== 'Selecione' && (
+          <BtnContainer onPress={() => done()}>
+            <BtnImg source={next} />
+          </BtnContainer>
+        )}
       </FooterContainer>
       <Modal
         isVisible={visible}
         onBackdropPress={() => setVisible(!visible)}
         propagateSwipe={true}
-        style={{
-          justifyContent: 'flex-end',
-          margin: 0,
-        }}>
+        style={style.modal}>
         <ModalContainer>
           <ModalHeader>
             <ModalHeaderText>Select your favorite pokemon type</ModalHeaderText>
@@ -85,7 +79,7 @@ const PokemonType: React.FC = () => {
             </BtnContainer>
           </ModalHeader>
           <ScrollView showsVerticalScrollIndicator={false}>
-            {types.map((item: {name: string; thumbnailImage: string}) => (
+            {types?.map((item: {name: string; thumbnailImage: string}) => (
               <PokemonTypeItem
                 key={item.name}
                 thumbnail={item.thumbnailImage}
