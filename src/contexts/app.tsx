@@ -7,15 +7,33 @@ interface Types {
   name: string;
 }
 
+interface Pokemon {
+  abilities: string[];
+  detailPageURL: string;
+  weight: number;
+  weakness: string[];
+  number: string;
+  height: number;
+  collectibles_slug: string;
+  featured: string;
+  slug: string;
+  name: string;
+  thumbnailAltText: string;
+  thumbnailImage: string;
+  id: number;
+  type: string[];
+}
+
 interface AppContextData {
   user: string;
   showInitial: boolean;
   setUser: React.Dispatch<React.SetStateAction<string>>;
   doneInitialStep: () => Promise<void>;
-  types: Types[] | undefined;
+  types: Types[];
   choice: string;
   setChoice: React.Dispatch<React.SetStateAction<string>>;
   loading: boolean;
+  pokemons: Pokemon[];
 }
 
 interface Props {
@@ -28,7 +46,8 @@ export const AppProvider: React.FC<Props> = ({children}: Props) => {
   const [user, setUser] = useState('');
   const [showInitial, setShowInitial] = useState(true);
   const [choice, setChoice] = useState('Selecione');
-  const [types, setTypes] = useState<Types[]>();
+  const [types, setTypes] = useState<Types[]>([]);
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [loading, setLoading] = useState(true);
 
   async function doneInitialStep(): Promise<void> {
@@ -44,9 +63,14 @@ export const AppProvider: React.FC<Props> = ({children}: Props) => {
   }
 
   useEffect(() => {
-    async function getData() {
+    async function getPokemonTypes() {
       const {data} = await api.get('/types.json');
       setTypes(data.results);
+    }
+
+    async function getPokemons() {
+      const {data} = await api.get('/pokemons.json');
+      setPokemons(data);
     }
 
     async function getInfo() {
@@ -69,7 +93,8 @@ export const AppProvider: React.FC<Props> = ({children}: Props) => {
         }
       }, 2000);
     }
-    getData();
+    getPokemonTypes();
+    getPokemons();
     getInfo();
   }, []);
 
@@ -84,6 +109,7 @@ export const AppProvider: React.FC<Props> = ({children}: Props) => {
         choice,
         setChoice,
         loading,
+        pokemons,
       }}>
       {children}
     </AppContext.Provider>

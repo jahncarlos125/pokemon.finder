@@ -1,10 +1,12 @@
 import React from 'react';
-import {View} from 'react-native';
+import {Text} from 'react-native';
+import {useApp} from '../../../contexts/app';
 
-// import { Container } from './styles';
+import {Container} from './styles';
 
 const Home: React.FC = () => {
-  return <View />;
+  const {pokemons} = useApp();
+  return <Container />;
 };
 
 export default Home;
