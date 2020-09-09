@@ -1,4 +1,5 @@
 import React, {createContext, useContext, useState, useEffect} from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import api from '../services/api';
 
 interface Types {
@@ -10,10 +11,11 @@ interface AppContextData {
   user: string;
   showInitial: boolean;
   setUser: React.Dispatch<React.SetStateAction<string>>;
-  setShowInitial: React.Dispatch<React.SetStateAction<boolean>>;
+  doneInitialStep: () => Promise<void>;
   types: Types[] | undefined;
   choice: string;
   setChoice: React.Dispatch<React.SetStateAction<string>>;
+  loading: boolean;
 }
 
 interface Props {
@@ -27,6 +29,19 @@ export const AppProvider: React.FC<Props> = ({children}: Props) => {
   const [showInitial, setShowInitial] = useState(true);
   const [choice, setChoice] = useState('Selecione');
   const [types, setTypes] = useState<Types[]>();
+  const [loading, setLoading] = useState(true);
+
+  async function doneInitialStep(): Promise<void> {
+    try {
+      setShowInitial(false);
+      await AsyncStorage.setItem('@pokemon:user', user);
+      await AsyncStorage.setItem('@pokemon:showInitial', JSON.stringify(false));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
     async function getData() {
@@ -34,7 +49,28 @@ export const AppProvider: React.FC<Props> = ({children}: Props) => {
       setTypes(data.results);
     }
 
+    async function getInfo() {
+      setTimeout(async () => {
+        try {
+          const userPersisted = await AsyncStorage.getItem('@pokemon:user');
+          console.log('getInfo -> userPersisted', userPersisted);
+          const showInitialPersisted = await AsyncStorage.getItem(
+            '@pokemon:showInitial',
+          );
+          console.log('getInfo -> showInitialPersisted', showInitialPersisted);
+          if (userPersisted && showInitialPersisted) {
+            setUser(userPersisted);
+            setShowInitial(JSON.parse(showInitialPersisted));
+          }
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
+        }
+      }, 2000);
+    }
     getData();
+    getInfo();
   }, []);
 
   return (
@@ -43,10 +79,11 @@ export const AppProvider: React.FC<Props> = ({children}: Props) => {
         user,
         showInitial,
         setUser,
-        setShowInitial,
+        doneInitialStep,
         types,
         choice,
         setChoice,
+        loading,
       }}>
       {children}
     </AppContext.Provider>

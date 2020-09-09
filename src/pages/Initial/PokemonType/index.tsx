@@ -34,14 +34,14 @@ import {useApp} from '../../../contexts/app';
 const PokemonType: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const navigation = useNavigation();
-  const {user, types, setShowInitial, choice, setChoice} = useApp();
+  const {user, types, doneInitialStep, choice, setChoice} = useApp();
 
   function toogleType(name: string): void {
     setChoice(name);
   }
 
-  function done(): void {
-    setShowInitial(false);
+  async function done(): Promise<void> {
+    await doneInitialStep();
   }
 
   return (
