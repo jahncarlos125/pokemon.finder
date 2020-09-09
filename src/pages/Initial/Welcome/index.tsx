@@ -14,8 +14,10 @@ import {
   FooterContainer,
   FooterImg,
 } from './styles';
+import {useNavigation} from '@react-navigation/native';
 
-const Welcome: React.FC = ({navigation}) => {
+const Welcome: React.FC = () => {
+  const navigation = useNavigation();
   return (
     <Container source={bg}>
       <HeaderContainer>

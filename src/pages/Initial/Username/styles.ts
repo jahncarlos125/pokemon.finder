@@ -6,11 +6,12 @@ export const Container = styled.ImageBackground`
 
 export const HeaderContainer = styled.View`
   flex: 1;
-  justify-content: center;
+  margin-top: 30px;
   padding-left: 30px;
 `;
 
 export const HeaderText = styled.Text`
+  margin-top: 100px;
   color: #fff;
   font-size: 30px;
 `;

@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, Text} from 'react-native';
 import bg from '../../../assets/bg.png';
 import next from '../../../assets/next.png';
+import {useNavigation} from '@react-navigation/native';
 
 import {
   Container,
@@ -16,6 +16,7 @@ import {
 } from './styles';
 
 const Username: React.FC = () => {
+  const navigation = useNavigation();
   return (
     <Container source={bg}>
       <HeaderContainer>
@@ -26,7 +27,7 @@ const Username: React.FC = () => {
         <BodyInput selectionColor="#FFF" />
       </BodyContainer>
       <FooterContainer>
-        <BtnContainer>
+        <BtnContainer onPress={() => navigation.navigate('PokemonType')}>
           <BtnImg source={next} />
         </BtnContainer>
       </FooterContainer>

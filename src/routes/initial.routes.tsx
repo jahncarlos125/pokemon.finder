@@ -5,6 +5,7 @@ import {
 } from '@react-navigation/stack';
 import Welcome from '../pages/Initial/Welcome';
 import Username from '../pages/Initial/Username';
+import PokemonType from '../pages/Initial/PokemonType';
 import {StatusBar} from 'react-native';
 // import { Container } from './styles';
 
@@ -20,6 +21,7 @@ const InitialRoutes: React.FC = () => {
         }}>
         <InitialRoutesStack.Screen name="Welcome" component={Welcome} />
         <InitialRoutesStack.Screen name="Username" component={Username} />
+        <InitialRoutesStack.Screen name="PokemonType" component={PokemonType} />
       </InitialRoutesStack.Navigator>
     </>
   );
