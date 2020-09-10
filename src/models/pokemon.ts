@@ -13,4 +13,4 @@ export default interface Pokemon {
   thumbnailImage: string;
   id: number;
   type: string[];
-}
+};

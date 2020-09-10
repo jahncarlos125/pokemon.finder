@@ -51,7 +51,6 @@ export const AppProvider: React.FC<Props> = ({children}: Props) => {
 
     async function getPokemons() {
       const {data} = await api.get('/pokemons.json');
-      console.log('getPokemons -> data', data);
       setPokemons(data);
     }
 
