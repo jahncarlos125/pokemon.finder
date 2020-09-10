@@ -8,7 +8,7 @@ const AppRoutes: React.FC = () => {
   return (
     <>
       <StatusBar backgroundColor="#55C7A1" />
-      <AppRoutesStack.Navigator>
+      <AppRoutesStack.Navigator screenOptions={{headerShown: false}}>
         <AppRoutesStack.Screen name="Home" component={Home} />
       </AppRoutesStack.Navigator>
     </>

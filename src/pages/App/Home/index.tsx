@@ -1,7 +1,7 @@
 import React, {useLayoutEffect, useEffect, useState} from 'react';
 import {useApp} from '../../../contexts/app';
 import {useNavigation} from '@react-navigation/native';
-import {FlatList, ActivityIndicator} from 'react-native';
+import {FlatList, ActivityIndicator, BackHandler} from 'react-native';
 import PokemonTypeItemHome from '../../../components/PokemonTypeItemHome';
 import PokemonItem from '../../../components/PokemonItem';
 import {
@@ -15,13 +15,16 @@ import {
 } from './styles';
 import Pokemon from '../../../models/pokemon';
 import arrow from '../../../assets/arrow.png';
+import {Toolbar} from 'react-native-material-ui';
 
 const Home: React.FC = () => {
   const {types, pokemons, choice} = useApp();
   const [pokemonsByType, setPokemonsByType] = useState<Pokemon[]>([]);
+  const [pokemonsByTerm, setPokemonsByTerm] = useState<Pokemon[]>([]);
   const [filter, setFilter] = useState(choice);
   const [loading, setLoading] = useState(false);
   const [descOrder, setDescOrder] = useState(true);
+  const [term, setTerm] = useState('');
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
@@ -54,6 +57,14 @@ const Home: React.FC = () => {
     setLoading(false);
   }, [pokemonsByType]);
 
+  useEffect(() => {
+    if (term) {
+      const search = pokemonsByType.filter((item) => item.name.includes(term));
+      setPokemonsByTerm(search);
+      setLoading(false);
+    }
+  }, [term]);
+
   function toogleType(name: string): void {
     setFilter(name);
   }
@@ -62,8 +73,42 @@ const Home: React.FC = () => {
     setDescOrder(!descOrder);
   }
 
+  function dataRender() {
+    if (term) {
+      if (descOrder) {
+        return pokemonsByTerm.sort((a, b) => a.name.localeCompare(b.name));
+      }
+      return pokemonsByTerm.sort((a, b) => b.name.localeCompare(a.name));
+    } else {
+      if (descOrder) {
+        return pokemonsByType.sort((a, b) => a.name.localeCompare(b.name));
+      }
+      return pokemonsByType.sort((a, b) => b.name.localeCompare(a.name));
+    }
+  }
+
   return (
     <Container>
+      <Toolbar
+        leftElement="power-settings-new"
+        onLeftElementPress={() => BackHandler.exitApp()}
+        centerElement="Pokemon Finder"
+        searchable={{
+          autoFocus: true,
+          placeholder: 'Search',
+          onChangeText: (text) => {
+            setTerm(text);
+          },
+        }}
+        style={{
+          container: {
+            backgroundColor: '#55C7A1',
+          },
+          titleText: {
+            fontSize: 22,
+          },
+        }}
+      />
       <FlatList
         data={types}
         // eslint-disable-next-line react-native/no-inline-styles
@@ -90,11 +135,7 @@ const Home: React.FC = () => {
           <ActivityIndicator size="large" />
         ) : (
           <FlatList
-            data={
-              descOrder
-                ? pokemonsByType.sort((a, b) => a.name.localeCompare(b.name))
-                : pokemonsByType.sort((a, b) => b.name.localeCompare(a.name))
-            }
+            data={dataRender()}
             keyExtractor={(type) =>
               type.id.toString() +
               type.height.toString() +
