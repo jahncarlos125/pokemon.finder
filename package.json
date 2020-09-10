@@ -19,6 +19,7 @@
     "lottie-react-native": "^3.5.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
+    "react-native-exit-app": "^1.1.0",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-material-ui": "^1.30.1",
     "react-native-modal": "^11.5.6",

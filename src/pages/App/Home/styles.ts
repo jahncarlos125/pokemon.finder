@@ -1,7 +1,8 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled.SafeAreaView`
   flex: 1;
+  background-color: #55c7a1;
 `;
 
 export const SelectTypes = styled.FlatList`
@@ -12,6 +13,7 @@ export const SelectPokemons = styled.FlatList``;
 
 export const Content = styled.View`
   flex: 1;
+  background-color: #fff;
 `;
 
 export const ContentHeader = styled.View`

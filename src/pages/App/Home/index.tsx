@@ -1,7 +1,8 @@
 import React, {useLayoutEffect, useEffect, useState} from 'react';
 import {useApp} from '../../../contexts/app';
 import {useNavigation} from '@react-navigation/native';
-import {FlatList, ActivityIndicator, BackHandler} from 'react-native';
+import {FlatList, ActivityIndicator} from 'react-native';
+import RNExitApp from 'react-native-exit-app';
 import PokemonTypeItemHome from '../../../components/PokemonTypeItemHome';
 import PokemonItem from '../../../components/PokemonItem';
 import {
@@ -91,11 +92,12 @@ const Home: React.FC = () => {
     <Container>
       <Toolbar
         leftElement="power-settings-new"
-        onLeftElementPress={() => BackHandler.exitApp()}
+        onLeftElementPress={() => RNExitApp.exitApp()}
         centerElement="Pokemon Finder"
         searchable={{
           autoFocus: true,
           placeholder: 'Search',
+          autoCapitalize: 'none',
           onChangeText: (text) => {
             setTerm(text);
           },
@@ -112,7 +114,7 @@ const Home: React.FC = () => {
       <FlatList
         data={types}
         // eslint-disable-next-line react-native/no-inline-styles
-        style={{maxHeight: 100}}
+        style={{maxHeight: 100, backgroundColor: '#FFF'}}
         horizontal
         keyExtractor={(type) => type.name}
         renderItem={({item}) => (
