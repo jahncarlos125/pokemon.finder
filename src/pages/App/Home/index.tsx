@@ -17,6 +17,10 @@ import {
 import Pokemon from '../../../models/pokemon';
 import arrow from '../../../assets/arrow.png';
 import {Toolbar} from 'react-native-material-ui';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
 const Home: React.FC = () => {
   const {types, pokemons, choice} = useApp();
@@ -107,14 +111,14 @@ const Home: React.FC = () => {
             backgroundColor: '#55C7A1',
           },
           titleText: {
-            fontSize: 22,
+            fontSize: hp('3%'),
           },
         }}
       />
       <FlatList
         data={types}
         // eslint-disable-next-line react-native/no-inline-styles
-        style={{maxHeight: 100, backgroundColor: '#FFF'}}
+        style={{maxHeight: hp('12%'), backgroundColor: '#FFF'}}
         horizontal
         keyExtractor={(type) => type.name}
         renderItem={({item}) => (

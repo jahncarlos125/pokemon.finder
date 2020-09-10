@@ -1,4 +1,8 @@
 import styled from 'styled-components/native';
+import {
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp,
+} from 'react-native-responsive-screen';
 
 export const Container = styled.ImageBackground`
   flex: 1;
@@ -22,14 +26,14 @@ export const BodyContainer = styled.View`
 export const BtnContainer = styled.TouchableOpacity`
   background-color: #ec2a76;
   padding: 20px;
-  margin: 50px;
+  margin: ${hp('10%')}px ${wp('15%')}px;
   border-radius: 10px;
   align-items: center;
 `;
 
 export const BtnText = styled.Text`
   color: #fff;
-  font-size: 22px;
+  font-size: ${hp('3%')}px;
 `;
 
 export const FooterContainer = styled.View`
