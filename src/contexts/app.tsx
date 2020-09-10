@@ -1,28 +1,8 @@
 import React, {createContext, useContext, useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import api from '../services/api';
-
-interface Types {
-  thumbnailImage: string;
-  name: string;
-}
-
-interface Pokemon {
-  abilities: string[];
-  detailPageURL: string;
-  weight: number;
-  weakness: string[];
-  number: string;
-  height: number;
-  collectibles_slug: string;
-  featured: string;
-  slug: string;
-  name: string;
-  thumbnailAltText: string;
-  thumbnailImage: string;
-  id: number;
-  type: string[];
-}
+import Pokemon from '../models/pokemon';
+import Types from '../models/types';
 
 interface AppContextData {
   user: string;
@@ -54,6 +34,7 @@ export const AppProvider: React.FC<Props> = ({children}: Props) => {
     try {
       setShowInitial(false);
       await AsyncStorage.setItem('@pokemon:user', user);
+      await AsyncStorage.setItem('@pokemon:type', choice);
       await AsyncStorage.setItem('@pokemon:showInitial', JSON.stringify(false));
     } catch (error) {
       console.log(error);
@@ -70,6 +51,7 @@ export const AppProvider: React.FC<Props> = ({children}: Props) => {
 
     async function getPokemons() {
       const {data} = await api.get('/pokemons.json');
+      console.log('getPokemons -> data', data);
       setPokemons(data);
     }
 
@@ -77,14 +59,14 @@ export const AppProvider: React.FC<Props> = ({children}: Props) => {
       setTimeout(async () => {
         try {
           const userPersisted = await AsyncStorage.getItem('@pokemon:user');
-          console.log('getInfo -> userPersisted', userPersisted);
           const showInitialPersisted = await AsyncStorage.getItem(
             '@pokemon:showInitial',
           );
-          console.log('getInfo -> showInitialPersisted', showInitialPersisted);
-          if (userPersisted && showInitialPersisted) {
+          const typePersisted = await AsyncStorage.getItem('@pokemon:type');
+          if (userPersisted && showInitialPersisted && typePersisted) {
             setUser(userPersisted);
             setShowInitial(JSON.parse(showInitialPersisted));
+            setChoice(typePersisted);
           }
         } catch (error) {
           console.log(error);

@@ -5,20 +5,15 @@ import {Container, Thumbnail, Title} from './styles';
 interface Props {
   thumbnail: string;
   name: string;
-  toogle: (name: string) => void;
 }
 
-const PokemonTypeItemHome: React.FC<Props> = ({
-  thumbnail,
-  name,
-  toogle,
-}: Props) => {
+const PokemonItem: React.FC<Props> = ({thumbnail, name}: Props) => {
   return (
-    <Container onPress={() => toogle(name)}>
+    <Container>
       <Thumbnail source={{uri: thumbnail}} />
       <Title>{name}</Title>
     </Container>
   );
 };
 
-export default PokemonTypeItemHome;
+export default PokemonItem;
