@@ -1,4 +1,5 @@
 # Pokemon Finder
+![](/screens/print.png)
 
 ## Motivação
 
@@ -20,6 +21,23 @@ O projeto consiste em uma aplicação que agrupa os pokemon's por tipo, e permit
 - React-native-vector-icons - biblioteca utilizada como fonte de icones
 - react-navigation - biblioteca utilizada para navegar entre as *pages* do aplicativo
 
-## Prints
+## Configurar Projeto
 
-![](/screens/print.png)
+- Faça o clone do projeto e logo após execute:
+```sh
+yarn
+```
+Se for rodar no iOS
+```sh
+cd ios && pod install
+```
+
+## Rodar Aplicação
+- Android
+```sh
+yarn android
+```
+- iOS
+```sh
+yarn ios
+```
