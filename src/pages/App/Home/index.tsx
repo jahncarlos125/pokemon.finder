@@ -1,10 +1,11 @@
 import React, {useLayoutEffect, useEffect, useState} from 'react';
 import {useApp} from '../../../contexts/app';
 import {useNavigation} from '@react-navigation/native';
-import {FlatList, ActivityIndicator} from 'react-native';
+import {FlatList, ActivityIndicator, TouchableOpacity} from 'react-native';
 import RNExitApp from 'react-native-exit-app';
 import PokemonTypeItemHome from '../../../components/PokemonTypeItemHome';
 import PokemonItem from '../../../components/PokemonItem';
+import Modal from 'react-native-modal';
 import {
   Container,
   Content,
@@ -17,20 +18,20 @@ import {
 import Pokemon from '../../../models/pokemon';
 import arrow from '../../../assets/arrow.png';
 import {Toolbar} from 'react-native-material-ui';
-import {
-  heightPercentageToDP as hp,
-  widthPercentageToDP as wp,
-} from 'react-native-responsive-screen';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import PokemonCard from '../../../components/PokemonCard';
 
 const Home: React.FC = () => {
   const {types, pokemons, choice} = useApp();
   const [pokemonsByType, setPokemonsByType] = useState<Pokemon[]>([]);
   const [pokemonsByTerm, setPokemonsByTerm] = useState<Pokemon[]>([]);
+  const [pokemon, setPokemon] = useState<Pokemon>();
   const [filter, setFilter] = useState(choice);
   const [loading, setLoading] = useState(false);
   const [descOrder, setDescOrder] = useState(true);
   const [term, setTerm] = useState('');
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -64,11 +65,11 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     if (term) {
-      const search = pokemonsByType.filter((item) => item.name.includes(term));
+      const search = pokemonsByType.filter((item) => item.slug.includes(term));
       setPokemonsByTerm(search);
       setLoading(false);
     }
-  }, [term]);
+  }, [pokemonsByType, term]);
 
   function toogleType(name: string): void {
     setFilter(name);
@@ -90,6 +91,11 @@ const Home: React.FC = () => {
       }
       return pokemonsByType.sort((a, b) => b.name.localeCompare(a.name));
     }
+  }
+
+  function moreInfo(currentPokemon: Pokemon) {
+    setPokemon(currentPokemon);
+    setModalVisible(!modalVisible);
   }
 
   return (
@@ -147,12 +153,24 @@ const Home: React.FC = () => {
               type.height.toString() +
               type.weight.toString()
             }
-            renderItem={({item}) => (
-              <PokemonItem name={item.name} thumbnail={item.thumbnailImage} />
-            )}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity onPress={() => moreInfo(item)}>
+                  <PokemonItem
+                    name={item.name}
+                    thumbnail={item.thumbnailImage}
+                  />
+                </TouchableOpacity>
+              );
+            }}
           />
         )}
       </Content>
+      <Modal
+        isVisible={modalVisible}
+        onBackdropPress={() => setModalVisible(!modalVisible)}>
+        <PokemonCard pokemon={pokemon} toogle={setModalVisible} />
+      </Modal>
     </Container>
   );
 };

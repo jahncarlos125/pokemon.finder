@@ -4,7 +4,7 @@ import {
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
 
-export const Container = styled.TouchableOpacity`
+export const Container = styled.View`
   flex-direction: row;
   border-bottom-width: ${hp('0.1%')}px;
   border-color: #c3c3c3;
