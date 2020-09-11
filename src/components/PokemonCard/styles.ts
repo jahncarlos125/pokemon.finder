@@ -19,12 +19,15 @@ export const Header = styled.View`
   padding: ${hp('1.2%')}px ${wp('3%')}px;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
 `;
 
 export const Title = styled.Text`
   color: #fff;
   font-size: ${hp('3.1%')}px;
   font-weight: 500;
+  flex: 1;
+  text-align: center;
 `;
 
 export const ImageContainer = styled.View`
@@ -54,14 +57,12 @@ export const Badge = styled.View`
   background-color: #55c7a175;
 `;
 
-export const CloseBtn = styled.TouchableOpacity`
-  flex: 1;
-`;
+export const CloseBtn = styled.TouchableOpacity``;
 
 export const CloseImg = styled.Image`
   align-self: flex-end;
-  height: ${hp('4.4%')}px;
-  width: ${wp('9%')}px;
+  height: ${hp('3%')}px;
+  width: ${wp('6%')}px;
 `;
 
 export const Weakness = styled.Text`

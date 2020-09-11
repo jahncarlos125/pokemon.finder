@@ -25,6 +25,9 @@ const PokemonCard: React.FC<Props> = ({pokemon, toogle}: Props) => {
     <Container>
       <Header>
         <Title>{pokemon?.name}</Title>
+        <CloseBtn onPress={() => toogle(false)}>
+          <CloseImg source={close} />
+        </CloseBtn>
       </Header>
       <ImageContainer>
         <Image source={{uri: pokemon?.thumbnailImage}} resizeMode="contain" />
@@ -35,9 +38,6 @@ const PokemonCard: React.FC<Props> = ({pokemon, toogle}: Props) => {
             <Weakness>{item}</Weakness>
           </Badge>
         ))}
-        <CloseBtn onPress={() => toogle(false)}>
-          <CloseImg source={close} />
-        </CloseBtn>
       </Footer>
     </Container>
   );
