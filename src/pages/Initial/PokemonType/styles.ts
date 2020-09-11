@@ -84,7 +84,10 @@ export const ModalContainer = styled.View`
 export const ModalHeader = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  padding: ${hp('2%')}px 0;
+  align-items: center;
+  padding-right: ${wp('6%')}px;
+  padding-top: ${hp('2%')}px;
+  padding-bottom: ${hp('1%')}px;
 `;
 
 export const ModalHeaderText = styled.Text`

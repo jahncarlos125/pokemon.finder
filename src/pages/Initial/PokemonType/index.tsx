@@ -30,6 +30,7 @@ import {
 import PokemonTypeItem from '../../../components/PokemonTypeItem';
 import {useNavigation} from '@react-navigation/native';
 import {useApp} from '../../../contexts/app';
+import {translate} from '../../../locales';
 
 const PokemonType: React.FC = () => {
   const [visible, setVisible] = useState(false);
@@ -50,17 +51,17 @@ const PokemonType: React.FC = () => {
         <HeaderBackBtnContainer onPress={() => navigation.goBack()}>
           <HeaderBackBtnImg source={chevron} />
         </HeaderBackBtnContainer>
-        <HeaderText>Hello, {user}!</HeaderText>
+        <HeaderText>{translate('hello', {name: user})}</HeaderText>
       </HeaderContainer>
       <BodyContainer>
-        <BodyText>...now tell us wich is your favorite Pokemon type:</BodyText>
+        <BodyText>{translate('pokemonType')}</BodyText>
         <SelectBtnContainer onPress={() => setVisible(!visible)}>
           <SelectText>{choice}</SelectText>
           <SelectBtnImg source={chevron} />
         </SelectBtnContainer>
       </BodyContainer>
       <FooterContainer>
-        {choice !== 'Selecione' && (
+        {choice !== translate('choose') && (
           <BtnContainer onPress={() => done()}>
             <BtnImg source={next} />
           </BtnContainer>
@@ -73,7 +74,7 @@ const PokemonType: React.FC = () => {
         style={style.modal}>
         <ModalContainer>
           <ModalHeader>
-            <ModalHeaderText>Select your favorite pokemon type</ModalHeaderText>
+            <ModalHeaderText>{translate('pokemonTypeModal')}</ModalHeaderText>
             <BtnContainer onPress={() => setVisible(!visible)}>
               <BtnImg source={close} />
             </BtnContainer>
@@ -91,7 +92,7 @@ const PokemonType: React.FC = () => {
           </ScrollView>
           <ModalFooter>
             <ModalFooterBtn onPress={() => setVisible(!visible)}>
-              <ModalFooterBtnText>Confirm</ModalFooterBtnText>
+              <ModalFooterBtnText>{translate('confirm')}</ModalFooterBtnText>
             </ModalFooterBtn>
           </ModalFooter>
         </ModalContainer>

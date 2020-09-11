@@ -20,6 +20,7 @@ import arrow from '../../../assets/arrow.png';
 import {Toolbar} from 'react-native-material-ui';
 import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import PokemonCard from '../../../components/PokemonCard';
+import {translate} from '../../../locales';
 
 const Home: React.FC = () => {
   const {types, pokemons, choice} = useApp();
@@ -106,7 +107,7 @@ const Home: React.FC = () => {
         centerElement="Pokemon Finder"
         searchable={{
           autoFocus: true,
-          placeholder: 'Search',
+          placeholder: translate('search'),
           autoCapitalize: 'none',
           onChangeText: (text) => {
             setTerm(text);
@@ -139,7 +140,7 @@ const Home: React.FC = () => {
         <ContentHeader>
           <ContentHeaderTitle>Pokemon</ContentHeaderTitle>
           <OrderedBtn onPress={() => changeOrder()}>
-            <OrderedBtnText>Name</OrderedBtnText>
+            <OrderedBtnText>{translate('name')}</OrderedBtnText>
             <OrderedBtnImg descOrder={descOrder} source={arrow} />
           </OrderedBtn>
         </ContentHeader>

@@ -15,6 +15,7 @@ import {
   FooterImg,
 } from './styles';
 import {useNavigation} from '@react-navigation/native';
+import {translate} from '../../../locales';
 
 const Welcome: React.FC = () => {
   const navigation = useNavigation();
@@ -26,7 +27,7 @@ const Welcome: React.FC = () => {
       </HeaderContainer>
       <BodyContainer>
         <BtnContainer onPress={() => navigation.navigate('Username')}>
-          <BtnText>Let's go!</BtnText>
+          <BtnText>{translate('letsGo')}</BtnText>
         </BtnContainer>
       </BodyContainer>
       <FooterContainer>

@@ -14,6 +14,7 @@ import {
   BtnContainer,
   BtnImg,
 } from './styles';
+import {translate} from '../../../locales';
 
 const Username: React.FC = () => {
   const navigation = useNavigation();
@@ -26,10 +27,10 @@ const Username: React.FC = () => {
   return (
     <Container source={bg}>
       <HeaderContainer>
-        <HeaderText>Let's meet each other first?</HeaderText>
+        <HeaderText>{translate('usernameTitle')}</HeaderText>
       </HeaderContainer>
       <BodyContainer>
-        <BodyText>First we need to know your name...</BodyText>
+        <BodyText>{translate('usernameInput')}</BodyText>
         <BodyInput
           selectionColor="#FFF"
           value={user}
